@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>アナログ時計</title>
+    <style>
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-color: #f0f0f0;
+        }
+        .clock {
+            position: relative;
+            width: 200px;
+            height: 200px;
+            border: 10px solid #333;
+            border-radius: 50%;
+            background: white url('clock-face.png') no-repeat center;
+        }
+        .hand {
+            position: absolute;
+            width: 50%;
+            height: 6px;
+            background: #333;
+            top: 50%;
+            transform-origin: 100%;
+            transform: rotate(90deg);
+            transition: transform 0.5s ease-in-out;
+        }
+        .hour {
+            height: 8px;
+            background: #000;
+        }
+        .minute {
+            height: 6px;
+            background: #333;
+        }
+        .second {
+            height: 4px;
+            background: red;
+        }
+    </style>
+</head>
+<body>
+    <div class="clock">
+        <div class="hand hour" id="hour"></div>
+        <div class="hand minute" id="minute"></div>
+        <div class="hand second" id="second"></div>
+    </div>
+    <script>
+        function updateClock() {
+            const now = new Date();
+            const second = now.getSeconds() * 6;
+            const minute = now.getMinutes() * 6 + second / 60;
+            const hour = (now.getHours() % 12) * 30 + minute / 12;
+    
+            document.getElementById('second').style.transform = `rotate(${second}deg)`;
+            document.getElementById('minute').style.transform = `rotate(${minute}deg)`;
+            document.getElementById('hour').style.transform = `rotate(${hour}deg)`;
+    
+            requestAnimationFrame(updateClock);
+        }
+    
+        requestAnimationFrame(updateClock);
+    </script>    
+</body>
+</html>
